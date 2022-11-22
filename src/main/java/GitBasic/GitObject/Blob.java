@@ -36,7 +36,9 @@ public class Blob implements GitObject {
 
     @Override
     public void deserialize(File file) {
-
+        Blob blob = Utils.readObject(file, Blob.class);
+        _data = blob._data;
+        _filePath = blob._filePath;
     }
 
     public byte[] getData() {
