@@ -2,6 +2,8 @@ import GitBasic.GitBasicException;
 import GitBasic.GitObject.Commit;
 import GitBasic.FileStructure.FileStructure;
 import java.io.File;
+
+import GitBasic.GitObject.StagingArea;
 import GitBasic.Utils;
 
 import org.junit.jupiter.api.*;
@@ -15,6 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommitTest {
     private File testCommitFile;
     private File testBlobFile;
+    private StagingArea testStagingArea;
+
+    @BeforeAll
+    public static void deleteExistingDir() {
+        Utils.deleteDir(FileStructure.GIT_BASIC_DIR);
+    }
 
     @BeforeEach
     public void createTempDir() {
@@ -54,7 +62,8 @@ public class CommitTest {
     @Test
     public void testSerialize3_commitFileCreated() {
         File commitFile;
-        Commit commit = new Commit("commie message");
+        Commit commit = new Commit();
+        commit.setMessage("commie message");
         commit.addFile(testBlobFile);
         commitFile = new File(FileStructure.COMMIT_DIR, commit.getCommitId());
         assertFalse(commitFile.exists());
@@ -72,7 +81,8 @@ public class CommitTest {
 
     @Test
     public void testDeserialize2_commitTimeStamp() {
-        Commit commit = new Commit("test message");
+        Commit commit = new Commit();
+        commit.setMessage("test message");
         commit.addFile(testBlobFile);
         commit.serialize();
         Commit commit2 = new Commit();
@@ -93,7 +103,8 @@ public class CommitTest {
 
     @Test
     public void testDeserialize4_checkBlobExists() {
-        Commit commit = new Commit("test message");
+        Commit commit = new Commit();
+        commit.setMessage("test message");
         commit.addFile(testBlobFile);
         commit.serialize();
         Commit commit2 = new Commit();

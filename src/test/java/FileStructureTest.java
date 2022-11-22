@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileStructureTest {
     @BeforeAll
     public static void createTempDir() {
+        Utils.deleteDir(FileStructure.GIT_BASIC_DIR);
         FileStructure.initGitBasicDirectory();
     }
 

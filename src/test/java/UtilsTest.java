@@ -5,6 +5,7 @@ import GitBasic.GitObject.CurrBranch;
 import GitBasic.GitObject.Head;
 import GitBasic.Utils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class UtilsTest {
     private File testBlobFile;
+
+    @BeforeAll
+    public static void deleteExistingDir() {
+        Utils.deleteDir(FileStructure.GIT_BASIC_DIR);
+    }
 
     @BeforeEach
     public void createTempFiles() {

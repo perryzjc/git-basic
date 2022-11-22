@@ -2,6 +2,7 @@ import GitBasic.FileStructure.FileStructure;
 import GitBasic.GitObject.CurrBranch;
 import GitBasic.Utils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test its default content
  */
 public class CurrBranchTest {
+    @BeforeAll
+    public static void deleteExistingDir() {
+        Utils.deleteDir(FileStructure.GIT_BASIC_DIR);
+    }
+
     @BeforeEach
     public void createTempCurrBranchFile() {
         FileStructure.initGitBasicDirectory();

@@ -16,6 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class BlobTest {
     private static File testFile;
+
+    @BeforeAll
+    public static void deleteExistingDir() {
+        Utils.deleteDir(FileStructure.GIT_BASIC_DIR);
+    }
+
     @BeforeEach
     public void createTempDirAndFile() {
         FileStructure.initGitBasicDirectory();
