@@ -10,10 +10,11 @@ import java.io.File;
  * current branch object stores the name of the current branch
  */
 public class CurrBranch implements GitObject {
+    private static final String DEFAULT_BRANCH_NAME = "main";
     private String _branchName;
 
     public CurrBranch() {
-
+        _branchName = DEFAULT_BRANCH_NAME;
     }
 
     public CurrBranch(String branchName) {
