@@ -37,6 +37,9 @@ public class Blob implements GitObject {
         }
         String blobFileName = getBlobId();
         File blobFile = Utils.join(FileStructure.BLOB_DIR, blobFileName);
+        if (blobFile.exists()) {
+            return;
+        }
         Utils.writeObject(blobFile, this);
     }
 
