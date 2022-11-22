@@ -15,6 +15,8 @@ public class Blob implements GitObject {
     private byte[] _data;
     /* the relative path of the file at the working directory*/
     private String _filePath;
+    /* the blob id, sha-1 hashed. It's the filename of blob object */
+    private String _blobId;
 
     public Blob() {
 
@@ -24,12 +26,16 @@ public class Blob implements GitObject {
         loadFile(file);
     }
 
+    public Blob(String filePath) {
+        loadFile(new File(filePath));
+    }
+
     @Override
     public void serialize() {
         if (_filePath == null || _data == null) {
             throw new GitBasicException("Blob is not initialized. Unable to serialize.");
         }
-        String blobFileName = generateBlobId();
+        String blobFileName = getBlobId();
         File blobFile = Utils.join(FileStructure.BLOB_DIR, blobFileName);
         Utils.writeObject(blobFile, this);
     }
@@ -39,6 +45,13 @@ public class Blob implements GitObject {
         Blob blob = Utils.readObject(file, Blob.class);
         _data = blob._data;
         _filePath = blob._filePath;
+    }
+
+    public String getBlobId() {
+        if (_blobId == null) {
+            _blobId = generateBlobId();
+        }
+        return _blobId;
     }
 
     public byte[] getData() {
@@ -57,6 +70,10 @@ public class Blob implements GitObject {
         _filePath = file.getPath();
     }
 
+    /**
+     * blob id is NOT part of the calculation of the blob id,
+     * or it will cause an incorrect sha-1 hash
+     */
     private String generateBlobId() {
         return Utils.sha1(_filePath, _data);
     }
