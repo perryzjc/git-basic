@@ -44,9 +44,8 @@ public class FileStructureTest {
 
     @Test
     public void testCommitFile() {
-        Utils.writeContents(FileStructure.COMMIT_OBJECT, "commit");
-        assertEquals(FileStructure.COMMIT_OBJECT.getPath(), ".git-basic/objects/commits/commit");
-        assertTrue(FileStructure.COMMIT_OBJECT.isFile());
+        File commitFile = new File(FileStructure.COMMIT_DIR, "commit");
+        assertEquals(".git-basic/objects/commits/commit", commitFile.getPath());
     }
 
     @Test
@@ -57,9 +56,8 @@ public class FileStructureTest {
 
     @Test
     public void testBlobFile() {
-        Utils.writeContents(FileStructure.BLOB_OBJECT, "blob");
-        assertEquals(FileStructure.BLOB_OBJECT.getPath(), ".git-basic/objects/blobs/blob");
-        assertTrue(FileStructure.BLOB_OBJECT.isFile());
+        File blobFile = new File(FileStructure.BLOB_DIR, "blob");
+        assertEquals(".git-basic/objects/blobs/blob", blobFile.getPath());
     }
 
     @Test
@@ -83,9 +81,8 @@ public class FileStructureTest {
 
     @Test
     public void testHeadFile() {
-        Utils.writeContents(FileStructure.HEAD_OBJECT, "head");
-        assertEquals(FileStructure.HEAD_OBJECT.getPath(), ".git-basic/refs/heads/head");
-        assertTrue(FileStructure.HEAD_OBJECT.isFile());
+        File headFile = new File(FileStructure.HEAD_DIR, "master");
+        assertEquals(".git-basic/refs/heads/master", headFile.getPath());
     }
 
     @Test
