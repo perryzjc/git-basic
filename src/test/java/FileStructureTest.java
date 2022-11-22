@@ -11,22 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test the file structure of the project.
  * Test whether each file/dir are created correctly.
  *
- * Create a temporary directory for testing. And delete it after all tests.
+ * Create a.txt temporary directory for testing. And delete it after all tests.
  */
 public class FileStructureTest {
     @BeforeAll
     public static void createTempDir() {
-        FileStructure.GIT_BASIC_DIR.mkdir();
-        FileStructure.OBJECT_DIR.mkdir();
-        FileStructure.COMMIT_DIR.mkdir();
-        FileStructure.BLOB_DIR.mkdir();
-        FileStructure.REF_DIR.mkdir();
-        FileStructure.HEAD_DIR.mkdir();
+        FileStructure.initGitBasicDirectory();
     }
 
     @AfterAll
     public static void deleteTempDir() {
-        assertTrue(deleteDir(FileStructure.GIT_BASIC_DIR), "Failed to delete temp dir");
+        assertTrue(Utils.deleteDir(FileStructure.GIT_BASIC_DIR), "Failed to delete temp dir");
     }
 
     @Test
@@ -98,18 +93,5 @@ public class FileStructureTest {
         Utils.writeContents(FileStructure.CURRENT_BRANCH_FILE, "test");
         assertEquals(FileStructure.CURRENT_BRANCH_FILE.getPath(), ".git-basic/refs/currentBranch");
         assertTrue(FileStructure.CURRENT_BRANCH_FILE.isFile());
-    }
-
-    public static boolean deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-        return dir.delete(); // The directory is empty now and can be deleted.
     }
 }
