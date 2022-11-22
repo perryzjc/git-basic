@@ -16,16 +16,19 @@ public class Blob implements GitObject {
     /* the relative path of the file at the working directory*/
     private String _filePath;
 
+    public Blob() {
+
+    }
+
     public Blob(File file) {
-        if (!file.exists()) {
-            throw new GitBasicException("File does not exist. Failed to create blob.");
-        }
-        _data = Utils.readContents(file);
-        _filePath = file.getPath();
+        loadFile(file);
     }
 
     @Override
     public void serialize() {
+        if (_filePath == null || _data == null) {
+            throw new GitBasicException("Blob is not initialized. Unable to serialize.");
+        }
         String blobFileName = generateBlobId();
         File blobFile = Utils.join(FileStructure.BLOB_DIR, blobFileName);
         Utils.writeObject(blobFile, this);
@@ -42,6 +45,14 @@ public class Blob implements GitObject {
 
     public String getFilePath() {
         return _filePath;
+    }
+
+    private void loadFile(File file) {
+        if (!file.exists()) {
+            throw new GitBasicException("File does not exist. Failed to create blob.");
+        }
+        _data = Utils.readContents(file);
+        _filePath = file.getPath();
     }
 
     private String generateBlobId() {
