@@ -1,5 +1,10 @@
 package GitBasic;
 
+import GitBasic.FileStructure.FileStructure;
+import GitBasic.GitObject.Commit;
+import GitBasic.GitObject.CurrBranch;
+import GitBasic.GitObject.Head;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -249,5 +254,19 @@ public class Utils {
         if (!file.exists()) {
             throw new GitBasicException("File does not exist.");
         }
+    }
+
+    public Commit getCurrCommit(CurrBranch currBranch) {
+        String branchName = currBranch.getBranchName();
+        File headFile = join(FileStructure.HEAD_DIR, branchName);
+        checkFileExists(headFile);
+        Head head = new Head();
+        head.deserialize(headFile);
+        String commitID = head.getCommitId();
+        File commitFile = join(FileStructure.COMMIT_DIR, commitID);
+        checkFileExists(commitFile);
+        Commit commit = new Commit();
+        commit.deserialize(commitFile);
+        return commit;
     }
 }
