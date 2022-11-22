@@ -4,7 +4,7 @@ import GitBasic.Utils;
 import java.io.File;
 
 /**
- * constants for file structure at .git-basic
+ * constants for file structure at .git-basic directory
  */
 public class FileStructure {
     public static final File GIT_BASIC_DIR = new File(".git-basic");
