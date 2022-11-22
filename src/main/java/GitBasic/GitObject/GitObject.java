@@ -19,8 +19,4 @@ public interface GitObject extends Serializable {
      * deserialize the git object from a file
      */
     public void deserialize(File file);
-
-    default public void deserialize(String filePath) {
-        deserialize(new File(filePath));
-    }
 }
