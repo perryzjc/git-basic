@@ -256,7 +256,7 @@ public class Utils {
         }
     }
 
-    public Commit getCurrCommit(CurrBranch currBranch) {
+    public static Commit getCurrCommit(CurrBranch currBranch) {
         String branchName = currBranch.getBranchName();
         File headFile = join(FileStructure.HEAD_DIR, branchName);
         checkFileExists(headFile);

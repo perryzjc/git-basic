@@ -1,4 +1,5 @@
 import GitBasic.FileStructure.FileStructure;
+import GitBasic.GitObject.Blob;
 import GitBasic.GitObject.Commit;
 import GitBasic.GitObject.CurrBranch;
 import GitBasic.GitObject.Head;
@@ -16,10 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test partial methods in Utils.java
  */
 public class UtilsTest {
+    private File testBlobFile;
+
     @BeforeEach
-    public void createTempDir() {
+    public void createTempFiles() {
         FileStructure.initGitBasicDirectory();
         FileStructure.createInitFiles();
+        testBlobFile = new File(FileStructure.BLOB_DIR, "blob_test");
+        Utils.writeContents(testBlobFile, "blob_test");
     }
 
     @AfterEach
@@ -29,15 +34,19 @@ public class UtilsTest {
 
     @Test
     public void testCurrCommitFile() {
-        setupHeadFiles();
-
+        setupHeadFilesAndCommitFile();
+        CurrBranch currBranch = CurrBranch.load();
+        Commit commit = Utils.getCurrCommit(currBranch);
+        assertEquals("test_message", commit.getMessage());
     }
 
     private void setupHeadFilesAndCommitFile() {
-        File currBranchFile = Utils.join(FileStructure.HEAD_DIR, CurrBranch.DEFAULT_BRANCH_NAME);
-        Head head = new Head("main", "test_commitId_123");
+        CurrBranch currBranch = new CurrBranch();
+        currBranch.serialize();
+        Commit commit = new Commit(null, "test_message");
+        commit.addFile(testBlobFile);
+        commit.serialize();
+        Head head = new Head("main", commit.getCommitId());
         head.serialize();
-        Commit commit = new Commit();
-        commit.set
     }
 }
