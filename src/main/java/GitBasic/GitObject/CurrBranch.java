@@ -10,7 +10,7 @@ import java.io.File;
  * current branch object stores the name of the current branch
  */
 public class CurrBranch implements GitObject {
-    private static final String DEFAULT_BRANCH_NAME = "main";
+    public static final String DEFAULT_BRANCH_NAME = "main";
     private String _branchName;
 
     public CurrBranch() {
@@ -19,6 +19,14 @@ public class CurrBranch implements GitObject {
 
     public CurrBranch(String branchName) {
         _branchName = branchName;
+    }
+
+    public static CurrBranch load() {
+        File currBranchFile = FileStructure.CURRENT_BRANCH_FILE;
+        Utils.checkFileExists(currBranchFile);
+        CurrBranch currBranch = new CurrBranch();
+        currBranch.deserialize(currBranchFile);
+        return currBranch;
     }
 
     @Override
