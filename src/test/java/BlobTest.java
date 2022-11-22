@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -31,9 +32,25 @@ public class BlobTest {
         File[] files;
         files = FileStructure.BLOB_DIR.listFiles();
         assertTrue(files != null && files.length == 0);
-        Blob blob = new Blob(testFile);
-        blob.serialize();
+        createSampleBlob();
         files = FileStructure.BLOB_DIR.listFiles();
         assertTrue(files != null && files.length == 1);
+    }
+
+    @Test
+    public void testDeserialize() {
+        createSampleBlob();
+        File[] files = FileStructure.BLOB_DIR.listFiles();
+        assertTrue(files != null && files.length == 1);
+        File blobFile = files[0];
+        Blob blob = new Blob();
+        blob.deserialize(blobFile);
+        assertEquals("src/test/resources/test_files/a.txt", blob.getFilePath());
+        assertEquals("test file 1", new String(blob.getData()));
+    }
+
+    private void createSampleBlob() {
+        Blob blob = new Blob(testFile);
+        blob.serialize();
     }
 }
