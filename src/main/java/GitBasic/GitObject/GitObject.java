@@ -1,5 +1,6 @@
 package GitBasic.GitObject;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -11,4 +12,9 @@ public interface GitObject extends Serializable {
      * serialize the git object to a file
      */
     public void serialize();
+
+    /**
+     * deserialize the git object from a file
+     */
+    public GitObject deserialize(File file);
 }
