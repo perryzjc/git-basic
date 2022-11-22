@@ -1,6 +1,8 @@
 package GitBasic.GitObject;
 
+import GitBasic.FileStructure.FileStructure;
 import GitBasic.GitBasicException;
+import GitBasic.Utils;
 
 import java.io.File;
 
@@ -18,11 +20,15 @@ public class Blob implements GitObject {
         if (!file.exists()) {
             throw new GitBasicException("File does not exist. Failed to create blob.");
         }
+        _data = Utils.readContents(file);
+        _filePath = file.getPath();
     }
 
     @Override
     public void serialize() {
-        return;
+        String blobFileName = generateBlobId();
+        File blobFile = Utils.join(FileStructure.BLOB_DIR, blobFileName);
+        Utils.writeObject(blobFile, this);
     }
 
     @Override
@@ -36,5 +42,9 @@ public class Blob implements GitObject {
 
     public String getFilePath() {
         return _filePath;
+    }
+
+    private String generateBlobId() {
+        return Utils.sha1(_filePath, _data);
     }
 }
