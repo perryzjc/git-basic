@@ -54,7 +54,8 @@ public class CommitTest {
     @Test
     public void testSerialize3_commitFileCreated() {
         File commitFile;
-        Commit commit = new Commit();
+        Commit commit = new Commit("commie message");
+        commit.addFile(testBlobFile);
         commitFile = new File(FileStructure.COMMIT_DIR, commit.getCommitId());
         assertFalse(commitFile.exists());
         commit.addFile(testBlobFile);
@@ -71,7 +72,7 @@ public class CommitTest {
 
     @Test
     public void testDeserialize2_commitTimeStamp() {
-        Commit commit = new Commit();
+        Commit commit = new Commit("test message");
         commit.addFile(testBlobFile);
         commit.serialize();
         Commit commit2 = new Commit();
@@ -82,7 +83,7 @@ public class CommitTest {
     @Test
     public void testDeserialize3_commitMessage() {
         Commit commit = new Commit();
-        commit.addMessage("test message");
+        commit.setMessage("test message");
         commit.addFile(testBlobFile);
         commit.serialize();
         Commit commit2 = new Commit();
@@ -92,7 +93,7 @@ public class CommitTest {
 
     @Test
     public void testDeserialize4_checkBlobExists() {
-        Commit commit = new Commit();
+        Commit commit = new Commit("test message");
         commit.addFile(testBlobFile);
         commit.serialize();
         Commit commit2 = new Commit();
