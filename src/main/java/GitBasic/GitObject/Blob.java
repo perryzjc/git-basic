@@ -35,8 +35,8 @@ public class Blob implements GitObject {
     }
 
     @Override
-    public GitObject deserialize(File file) {
-        return null;
+    public void deserialize(File file) {
+
     }
 
     public byte[] getData() {

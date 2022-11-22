@@ -16,5 +16,5 @@ public interface GitObject extends Serializable {
     /**
      * deserialize the git object from a file
      */
-    public GitObject deserialize(File file);
+    public void deserialize(File file);
 }
