@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+
+/**
+ * initial commit need to be created specially using createInitialCommit()
+ */
 public class Commit implements GitObject{
     /* commit id, sha-1 hashed */
     private String _commitId;
@@ -28,17 +32,33 @@ public class Commit implements GitObject{
     public Commit() {
         _parentCommitIds = new ArrayList<>();
         _fileMap = new HashMap<>();
-        _stagingArea = new StagingArea();
+        _stagingArea = null;
     }
 
-    public Commit(StagingArea stagingArea) {
-        _parentCommitIds = new ArrayList<>();
-        _fileMap = new HashMap<>();
+    public Commit(CurrBranch currBranch) {
+        this();
+        _stagingArea = new StagingArea(currBranch);
     }
 
-    public Commit(StagingArea stagingArea, String message) {
-        this(stagingArea);
+    public Commit(CurrBranch currBranch, String message) {
+        this(currBranch);
         _message = message;
+    }
+
+    /**
+     * initial commit, every commit's root is at the initial commit
+     *
+     * create an initial commit object file in a special way,
+     * and return the commit object
+     */
+    public static Commit createInitialCommit() {
+        Commit commit = new Commit();
+        commit._message = "initial commit";
+        commit.generateTimeStamp();
+        commit._commitId = Utils.sha1(commit._message, commit._timeStamp);
+        File commitFile = new File(FileStructure.COMMIT_DIR, commit._commitId);
+        Utils.writeObject(commitFile, commit);
+        return commit;
     }
 
     @Override
@@ -88,16 +108,14 @@ public class Commit implements GitObject{
         _message = message;
     }
 
-    public void set_commitId(String _commitId) {
-        this._commitId = _commitId;
-    }
-
     public String getMessage() {
         return _message;
     }
 
     public String getCommitId() {
-        generateCommitId();
+        if (_commitId == null) {
+            generateCommitId();
+        }
         return _commitId;
     }
 
