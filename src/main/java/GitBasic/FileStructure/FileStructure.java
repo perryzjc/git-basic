@@ -18,4 +18,13 @@ public class FileStructure {
     public static final File HEAD_DIR = Utils.join(REF_DIR, "heads");
     public static final File HEAD_OBJECT = Utils.join(HEAD_DIR, "head");
     public static final File CURRENT_BRANCH_FILE = Utils.join(REF_DIR, "currentBranch");
+
+    public static final void initGitBasicDirectory() {
+        GIT_BASIC_DIR.mkdir();
+        OBJECT_DIR.mkdir();
+        COMMIT_DIR.mkdir();
+        BLOB_DIR.mkdir();
+        REF_DIR.mkdir();
+        HEAD_DIR.mkdir();
+    }
 }
