@@ -245,7 +245,7 @@ public class Utils {
         return dir.delete(); // The directory is empty now and can be deleted.
     }
 
-    public void checkFileExists(File file) {
+    public static void checkFileExists(File file) {
         if (!file.exists()) {
             throw new GitBasicException("File does not exist.");
         }
