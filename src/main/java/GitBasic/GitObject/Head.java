@@ -8,11 +8,15 @@ import java.io.File;
 
 /**
  * Head is a pointer to the specific branch
- * It points to the most recent commit of the branch
  */
 public class Head implements GitObject {
     private String _branchName;
     private String _commitId;
+
+    public Head() {
+        _branchName = null;
+        _commitId = null;
+    }
 
     public Head(String branchName, String commitId) {
         _branchName = branchName;
