@@ -1,6 +1,8 @@
 package GitBasic.FileStructure;
 
+import GitBasic.GitObject.Commit;
 import GitBasic.GitObject.CurrBranch;
+import GitBasic.GitObject.Head;
 import GitBasic.GitObject.StagingArea;
 import GitBasic.Utils;
 import java.io.File;
@@ -28,7 +30,12 @@ public class FileStructure {
     }
 
     public static void createInitFiles() {
-        Utils.writeObject(STAGING_AREA_FILE, new StagingArea());
-        Utils.writeObject(CURRENT_BRANCH_FILE, new CurrBranch());
+        CurrBranch currBranch = new CurrBranch();
+        StagingArea stagingArea = new StagingArea(currBranch);
+        Commit commit = Commit.createInitialCommit();
+        Head head = new Head("main", commit.getCommitId());
+        currBranch.serialize();
+        stagingArea.serialize();
+        head.serialize();
     }
 }
