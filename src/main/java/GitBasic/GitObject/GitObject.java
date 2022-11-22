@@ -7,5 +7,8 @@ import java.io.Serializable;
  * git object is serializable
  */
 public interface GitObject extends Serializable {
+    /**
+     * serialize the git object to a file
+     */
     public void serialize();
 }
