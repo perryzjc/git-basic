@@ -26,7 +26,10 @@ public class Utils {
     /* SHA-1 HASH VALUES. */
 
     /** Returns the SHA-1 hash of the concatenation of VALS, which may
-     *  be any mixture of byte arrays and Strings. */
+     *  be any mixture of byte arrays and Strings.
+     *
+     *  val is a list of byte[] and String
+     */
     public static String sha1(Object... vals) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
