@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Commit implements  GitObject{
+public class Commit implements GitObject{
     /* commit id, sha-1 hashed */
     private String _commitId;
     /* the comment for the commit */
@@ -23,14 +23,21 @@ public class Commit implements  GitObject{
     private String _timeStamp;
     /* key: file path, value: blob id */
     private HashMap<String, String> _fileMap;
+    private StagingArea _stagingArea;
 
     public Commit() {
         _parentCommitIds = new ArrayList<>();
         _fileMap = new HashMap<>();
+        _stagingArea = new StagingArea();
     }
 
-    public Commit(String message) {
-        this();
+    public Commit(StagingArea stagingArea) {
+        _parentCommitIds = new ArrayList<>();
+        _fileMap = new HashMap<>();
+    }
+
+    public Commit(StagingArea stagingArea, String message) {
+        this(stagingArea);
         _message = message;
     }
 
@@ -79,6 +86,10 @@ public class Commit implements  GitObject{
 
     public void setMessage(String message) {
         _message = message;
+    }
+
+    public void set_commitId(String _commitId) {
+        this._commitId = _commitId;
     }
 
     public String getMessage() {
