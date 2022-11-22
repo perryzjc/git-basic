@@ -1,5 +1,7 @@
 package GitBasic.FileStructure;
 
+import GitBasic.GitObject.CurrBranch;
+import GitBasic.GitObject.StagingArea;
 import GitBasic.Utils;
 import java.io.File;
 
@@ -23,5 +25,10 @@ public class FileStructure {
         BLOB_DIR.mkdir();
         REF_DIR.mkdir();
         HEAD_DIR.mkdir();
+    }
+
+    public static void createInitFiles() {
+        Utils.writeObject(STAGING_AREA_FILE, new StagingArea());
+        Utils.writeObject(CURRENT_BRANCH_FILE, new CurrBranch());
     }
 }
